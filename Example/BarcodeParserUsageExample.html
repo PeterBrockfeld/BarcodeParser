@@ -1,0 +1,46 @@
+<!doctype html>
+<!--
+P. Brockfeld, 2014-02-05
+
+Using JavaScript for parsing GS1 barcodes:
+
+simple example using the BarcodeParser.js - library
+
+-->
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>GS1 barcode parser</title>
+    <meta name="description" content="GS1-Barcode-Parser">
+    <meta name="author" content="P. Brockfeld">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./css/BarcodeParser.css" />
+
+    <!-- the BarcodeParser library itself: -->
+    <script src="../scripts/BarcodeParser.js"></script>
+
+    <!-- script to invoke the library functions: -->
+    <script src="./BarcodeParserUsageExample.js"></script>
+</head>
+
+<body>
+    <h1>Example: parsing GS1 barcodes</h1>
+    <div id="barcodeInputDiv">
+        <p>The example here assumes a barcode scanning device which emulates a <em>german</em> keyboard. Adjust the JavaScript "BarcodeParserUsageExample.js" to <em>your</em> device.</p>
+        <p>
+            Scan here:
+        </p>
+        <input type="text" id="barcode">
+        <input type="button" value="Parse" id="sendbutton">
+    </div>
+    <div id="parsedCodeOutput">
+        <p>Symbology identification:&nbsp;<span id="symbologyIdentification"></span>
+        </p>
+        <table id="parsedElementsOutput"></table>
+    </div>
+
+</body>
+
+</html>

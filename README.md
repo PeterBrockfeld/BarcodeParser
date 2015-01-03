@@ -11,12 +11,15 @@
 * [How to use it](#how-to-use-it)
 * [A simple scanning application as example](#a-simple-scanning-application-as-example)
 * [About barcode scanning devices](#about-barcode-scanning-devices)
+ * [Keypress detecting](#key-press-detecting)
  * [The Barcodes](#the-barcodes)
 
 
 ## Purpose
 
-The barcode parser is a library for handling the contents of GS1 barcodes. The two dimensional barcodes can hold a *lot* of information, the barcode parser makes it easier to access it.
+The barcode parser is a library for handling the contents of GS1 barcodes. GS1 barcodes are used for several purposes, from a humble barcode on a product you buy to complex barcodes describing the contents of a whole pallet. Especially the two dimensional barcodes can hold a *lot* of information.
+
+The barcode parser makes it easier to access it.
 
 The barcode parser contains a single function for parsing GS1-barcodes, yielding the single elements in a format processable by JavaScript.
 
@@ -38,7 +41,7 @@ The full "GS1 General Specifications" can be found on http://www.gs1.org/genspec
 
 GS1 barcodes are able to contain information about a product: its GTIN ("Global Trade Item Number", formerly known as UPC or EAN), the weight or dimensions of the item, its price, the lot/batch code, the date when it was fabricated and so on.
 
-### about the structure of GS1 barcodes
+### About the structure of GS1 barcodes
 
 A GS1 barcode is a concatenation of *data elements*. Each single element starts with an *application identifier* ("AI"), a two to four digits number. The number is followed by the actual information.
 
@@ -111,7 +114,7 @@ From the example above: `parseBarcode()` will return an object with "GS1-128" in
 
 ## A simple scanning application as example
 
-The directory `example` contains an example for using the barcode parser. It has three components:
+The directory `Example` contains an example using the barcode parser. It has three components:
 
 * a HTML page with 
  * a form for input and 
@@ -122,16 +125,45 @@ The directory `example` contains an example for using the barcode parser. It has
  * filling the table using the returned object
 * some CSS for styling the page
 
+If you have no scanning device at hand, you can use the string in "ScannedBarcode.txt" to copy &amp; paste it into the input field of the example.
+
 ## About barcode scanning devices
+
+GS1 barcodes are usually scanned using a barcode scanning device. If you use GS1 barcodes with a web application, you'll probably have a setup where the barcode scanner behaves as a keyboard ("HID").
+
+This works fine for most characters, but has one big drawback: the FNC1.
+
+### The FNC1
+
+The FNC1 is a non-printable control character used to delimit GS1 Element Strings of variable length.
+
+The barcode types GS1 DataMatrix and GS1 QR Code use the ASCII group separator ("GS", ASCII 29, 0x1D; Unicode U+001D) as FNC1.
+
+This non-printable character won't be found on any keyboard. So the scanner sends a Ctrl-sequence as a replacement. The canonical sequence for GS is "Ctrl"+"]".
+
+So if you use a ```<input>``` field in your website the browser will receive the control sequence "Ctrl" + "]". Depending on your setup the browser will react in some way to this control sequence.
+
+Things get messy when you use a non-english keyboard. For example: on german keyboards the key left beside the enter key is used for the "+" sign. On an english keyboard there is the "]". If the scanner is operated as a HID **and** configured to behave like a *german* keyboard, the scanner sends "Ctrl" + "+", which causes most browsers to increase their zoom factor.
+
+So you have two things to do:
+
+* identify the sequence your scanner sends to the browser when a group separator is scanned
+* catch these keyboard events and transform them into a group separator within the input field
+
+The ```BarcodeParserUsageExample.js``` does the latter part for a scanner which sends (emulating a german keyboard) a "Ctrl" + "+" if it encounters a group separator in the barcode.
+
+### Key Press Detecting
+
+The directory ```KeypressDetecting``` contains a simple HTML page to explore what kind of control sequence *your* scanner sends. It has an input field and logs the values (```keyCode```, ```charCode``` and ```which```) of the keypresses to the console.
 
 ### The Barcodes
 
-As an example the directory `docs` contains five barcodes, three of them containing the same data:
+As an example the directory `Barcodes` contains five barcodes, three of them containing the same data:
 
 * a GS1-128-Code,
 * a GS1-DataMatrix-Code and 
 * a GS1-QR-Code.
 
-The other two just contain three characters: "1", the "&lt;GS&gt;" group separator and "3". They can be used to find out what *your* scanner sends when it encounters a "<GS>" in a barcode.
+The other two just contain three characters: "1", the "&lt;GS&gt;" group separator and "3". They can be used to find out what *your* scanner sends when it encounters a "&lt;GS&gt;" in a barcode.
 
 You can print them using the "ExamplesForBarcode.pdf".
