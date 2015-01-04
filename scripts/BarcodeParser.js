@@ -1,7 +1,14 @@
 /**
  * P. Brockfeld, 2014-02-05
  *
- * JavaScript for parsing GS1 barcodes
+ * JavaScript for parsing GS1 barcodes, see
+ * 
+ * https://github.com/PeterBrockfeld/BarcodeParser
+ *
+ * for details.
+ */
+
+/**
  *
  * encapsulating the barcode parsing function in an anonymous, self-executing function
  */

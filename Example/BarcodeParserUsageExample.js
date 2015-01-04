@@ -1,7 +1,13 @@
 /**
  *  P. Brockfeld, 2014-06-18
  *
- * Example for parsing GS1 barcodes
+ * Example for parsing GS1 barcodes,
+ *
+ * see
+ * 
+ * https://github.com/PeterBrockfeld/BarcodeParser
+ *
+ * for details.
  */
 
 var inputField = {},

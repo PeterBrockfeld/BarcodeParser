@@ -1,8 +1,14 @@
-/*
-P. Brockfeld, 2014-12-27
-
-Testing keypress events 
-*/
+/**
+ * P. Brockfeld, 2014-12-27
+ *
+ * Testing keypress events,
+ * see
+ * 
+ *   https://github.com/PeterBrockfeld/BarcodeParser
+ *
+ * for details.
+ *
+ */
 var outputString = "";
 
 function logInput(event) {
