@@ -9,10 +9,12 @@
  * [about the structure of GS1 barcodes](#about-the-structure-of-gs1-barcodes)
 * [Use case](#use-case)
 * [How to use it](#how-to-use-it)
+ * [Limitations](#limitations)
 * [A simple scanning application as example](#a-simple-scanning-application-as-example)
 * [About barcode scanning devices](#about-barcode-scanning-devices)
  * [Keypress detecting](#key-press-detecting)
  * [The Barcodes](#the-barcodes)
+* [License](#license) 
 
 
 ## Purpose
@@ -35,7 +37,7 @@ The library is my own humble interpretation of the GS1 specification. Neither is
 
 ## The Specification
 
-The full "GS1 General Specifications" can be found on http://www.gs1.org/genspecs. It's a 478 pages document.
+The full "GS1 General Specifications" can be found on http://www.gs1.org/genspecs. It's a 478 pages document. The barcode parser is based on the *Version 14, Issue 1, Jan 2014* of this specification.
 
 ## About GS1 barcodes
 
@@ -78,6 +80,8 @@ You want to extract some data out of the scanned code, e.g. the lot/batch number
 
 ## How to use it
 
+The library is located in the `scripts` directory; in its uncompressed form and in a version minified with the `uglifyjs` tool (see https://github.com/mishoo/UglifyJS2).
+
 Load the library into your application:
 
 ```html
@@ -111,6 +115,10 @@ From the example above: `parseBarcode()` will return an object with "GS1-128" in
 * "PRICE" as `title`,
 * "47.11" as `data` (a floating point number) and
 * "978" as `unit` (the ISO code for €)
+
+### Limitations
+
+The `parseBarcode()` function doesn't do any checks for plausibility. If the code you handle over to the function contains e.g. an invalid GTIN or some invalid ISO code the function will happily return this invalid content.
 
 ## A simple scanning application as example
 
@@ -167,3 +175,7 @@ As an example the directory `Barcodes` contains five barcodes, three of them con
 The other two just contain three characters: "1", the "&lt;GS&gt;" group separator and "3". They can be used to find out what *your* scanner sends when it encounters a "&lt;GS&gt;" in a barcode.
 
 You can print them using the "ExamplesForBarcode.pdf".
+
+## License
+
+Copyright (c) 2014-2015 Peter Brockfeld. See the LICENSE.md file for license rights and limitations (MIT).
