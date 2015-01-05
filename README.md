@@ -116,6 +116,8 @@ From the example above: `parseBarcode()` will return an object with "GS1-128" in
 * "47.11" as `data` (a floating point number) and
 * "978" as `unit` (the ISO code for €)
 
+Some remarks about how the function works can be found in `README_scripts.md` within the `scripts` folder.
+
 ### Limitations
 
 The `parseBarcode()` function doesn't do any checks for plausibility. If the code you handle over to the function contains e.g. an invalid GTIN or some invalid ISO code the function will happily return this invalid content.

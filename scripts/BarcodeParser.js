@@ -2,7 +2,7 @@
  * P. Brockfeld, 2014-02-05
  *
  * JavaScript for parsing GS1 barcodes, see
- * 
+ *
  * https://github.com/PeterBrockfeld/BarcodeParser
  *
  * for details.
@@ -14,7 +14,6 @@
  */
 var parseBarcode = (function () {
     'use strict';
-
     /**
      * This is the main routine provided by the parseBarcode library. It takes a string,
      * splices it from left to right into its elements and tries to parse it as an
@@ -23,6 +22,7 @@ var parseBarcode = (function () {
      * @param   {String}   barcode is the contents of the barcode you'd like to get parsed
      * @returns {Array}    an array with elements which are objects of type "ParsedElement"
      */
+
     function parseBarcode(barcode) {
         var i = 0, // counter
             fncChar = String.fromCharCode(29), // the ASCII "group separator"
@@ -36,7 +36,8 @@ var parseBarcode = (function () {
         //auxilliary functions
 
         /**
-         * is the
+         * "ParsedElement" is the
+         *
          * @constructor for ParsedElements, the components of the array returned by parseBarcode
          * @param {String} elementAI        the AI of the recognized element
          * @param {String} elementDataTitle the title of the element, i.e. its short description
@@ -66,20 +67,28 @@ var parseBarcode = (function () {
                 this.data = "";
                 break;
             }
-            this.unit = ""; // some elements are accompaigned by an unit of measurement or currency
+            this.unit = ""; // some elements are accompaigned by an unit of 
+                            // measurement or currency
         }
 
         /**
+         *
+         * ================== BEGIN of identifyAI =======================
+         *
          * does the main work:
          *   what AI is in the beginning of the restOfBarcode?
          *     If identified:
          *       which function to call with
          *       which parameters to parse the element?[Description]]
-         * @param   {String} codestring a string; the function tries to identify an AI in the beginning of this string
-         * @returns {Object} if it succeeds in identifying an AI the ParsedElement is returned
+         * @param   {String} codestring a string; the function tries to 
+         *                   identify an AI in the beginning of this string
+         * @returns {Object} if it succeeds in identifying an AI the 
+         *                   ParsedElement is returned, together with the
+         *                   still unparsed rest of codestring.
          */
         function identifyAI(codestring) {
-            // find first identifier. AIs have a minimum length of 2 digits, some have 3, some even 4.
+            // find first identifier. AIs have a minimum length of 2 
+            // digits, some have 3, some even 4.
             var firstNumber = codestring.slice(0, 1),
                 secondNumber = codestring.slice(1, 2),
                 thirdNumber = "",
@@ -89,10 +98,15 @@ var parseBarcode = (function () {
                 elementToReturn = "";
 
             /**
-             * some data items are followed by an FNC even in case of fixed lengths,
-             * so the codestringToReturn may have leading FNCs.
+             * ============ auxiliary functions for identifyAI =============
+             */
+            /**
+             * some data items are followed by an FNC even in case of 
+             * fixed length, so the codestringToReturn may have 
+             * leading FNCs.
              *
              * This function eleminates these leading FNCs.
+             *
              * @param   {String} stringToClean string which has to be cleaned
              * @returns {String} the cleaned string
              */
@@ -106,23 +120,34 @@ var parseBarcode = (function () {
                 return stringToClean;
             }
             /**
-             * Used for calculating numbers which are given as string with a given number of fractional decimals.
-             * To avoid conversion errors binary <-> decimal I _don't_ just divide by 10 numberOfFractionals times
+             * Used for calculating numbers which are given as string
+             * with a given number of fractional decimals.
+             *
+             * To avoid conversion errors binary <-> decimal I _don't_
+             * just divide by 10 numberOfFractionals times.
              */
             function parseFloatingPoint(stringToParse, numberOfFractionals) {
                 var auxString = "",
                     offset = stringToParse.length - numberOfFractionals;
 
-                auxString = stringToParse.slice(0, offset) + '.' + stringToParse.slice(offset, stringToParse.length);
+                auxString = stringToParse.slice(0, offset)
+                            + '.'
+                            + stringToParse.slice(offset, stringToParse.length);
                 return parseFloat(auxString);
             }
-
+            /**
+             * ======== END of auxiliary function for identifyAI =======  
+             */
 
             /**
-             * Some functions to parse the various GS1 formats. They create
-             * a new ParsedElement and set its properties.
              *
-             * They all modify the variables "elementToReturn" and "codestringToReturn".
+             * ======== BEGIN of parsing functions in identifyAI =======
+             *
+             * Some functions to parse the various GS1 formats. They 
+             * create a new ParsedElement and set its properties.
+             *
+             * They all modify the variables "elementToReturn" and 
+             * "codestringToReturn".
              */
 
             /**
@@ -230,6 +255,15 @@ var parseBarcode = (function () {
                 codestringToReturn = codestring.slice(offSet + 6, codestringLength);
             }
 
+            /**
+             * parses data elements of variable length, which additionally have
+             *
+             * - an indicator for the number of valid decimals
+             * - an implicit unit of measurement
+             *
+             * These data elements contain e.g. a weight or length.
+             *
+             */
             function parseVariableLengthMeasure(ai_stem, fourthNumber, title, unit) {
                 // the place of the decimal fraction is given by the fourth number, that's
                 // the first after the identifier itself.
@@ -251,7 +285,16 @@ var parseBarcode = (function () {
                 elementToReturn.data = parseFloatingPoint(numberPart, numberOfDecimals);
                 elementToReturn.unit = unit;
             }
-
+            
+            /**
+             * parses data elements of variable length, which additionally have
+             *
+             * - an indicator for the number of valid decimals
+             * - an explicit unit of measurement
+             *
+             * These data element contain amounts to pay or prices.
+             *
+             */
             function parseVariableLengthWithISONumbers(ai_stem, fourthNumber, title) {
                 // an element of variable length, representing a number, followed by
                 // some ISO-code.
@@ -276,7 +319,14 @@ var parseBarcode = (function () {
                 elementToReturn.unit = isoPlusNumbers.slice(0, 3);
 
             }
-
+            /**
+             * parses data elements of variable length, which additionally have
+             *
+             * - an explicit unit of measurement or reference
+             *
+             * These data element contain countries, authorities within countries.
+             *
+             */
             function parseVariableLengthWithISOChars(ai_stem, title) {
                 // an element of variable length, representing a sequence of chars, followed by
                 // some ISO-code.          
@@ -296,13 +346,20 @@ var parseBarcode = (function () {
                 elementToReturn.data = isoPlusNumbers.slice(3, isoPlusNumbers.length);
                 elementToReturn.unit = isoPlusNumbers.slice(0, 3);
             }
-
             /**
-             * and now a very big "switch", which tries to find a valid AI within
-             * the first digits of the codestring.
              *
-             * See the documentation for an explanation why it is made this way (and not by some
-             * configuration file).
+             * ======== END of parsing functions in identifyAI =======
+             *
+             */
+            /**
+             *
+             * ======= BEGIN of the big switch =======================
+             *
+             * and now a very big "switch", which tries to find a valid 
+             * AI within the first digits of the codestring.
+             *
+             * See the documentation for an explanation why it is made 
+             * this way (and not by some configuration file).
              */
 
             switch (firstNumber) {
@@ -1091,13 +1148,34 @@ var parseBarcode = (function () {
             default:
                 throw "32";
             }
+            /**
+             *
+             * ======= END of the big switch =======================
+             *
+             * now identifyAI has just to return the new 
+             * ParsedElement (create by one of the parsing 
+             * functions) and the (cleaned) rest of codestring.
+             */
+            
             return ({
                 element: elementToReturn,
                 codestring: cleanCodestring(codestringToReturn)
             });
         }
-
+        
         /**
+         *
+         * =========== END of identifyAI =======================
+         *
+         */
+        
+        /**
+         * =========== BEGIN of main routine ===================
+         */
+        
+        /**
+         *
+         * ==== First step: ====
          *
          * IF there is any symbology identifier
          *   chop it off;
@@ -1146,6 +1224,14 @@ var parseBarcode = (function () {
          * ParsedElements.
          */
 
+        /**
+         * ===== Second step: ====
+         * 
+         * Parse "barcode" data element by data element using
+         * identifyAI.
+         *
+         */
+        
         answer.parsedCodeItems = [];
 
         /**
@@ -1244,6 +1330,10 @@ var parseBarcode = (function () {
                 }
             }
         }
+        /**
+         * ==== Third and last step: =====
+         * 
+         */
         return answer;
     }
     return parseBarcode;

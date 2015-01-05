@@ -48,13 +48,48 @@ The main routine of `parseBarcode()` is pretty simple:
  
 ### the function identifyAI
 
-TBD
- 
+This function does the main work load: it tries to find a valid AI within the first digits of the `codestring` handled over to it and calls the approbiate parsing function to fill a new `ParsedElement`.
+
+It defines two local auxiliary functions:
+
+* cleanCodestring
+* parseFloatingPoint
+
+and seven parsing function for the seven types of data elements:
+
+* parseDate,
+* parseFixedLength,
+* parseVariableLength,
+* parseFixedLengthMeasure,
+* parseVariableLengthMeasure,
+* parseVariableLengthWithISONumbers and
+* parseVariableLengthWithISOChars.
+
+All of these seven function create a new `ParsedElement` and shorten the `codestring`, cutting off the part just parsed.
+
+You'll find some remarks about the single functions within the script.
+
+Finding a valid AI is done by a very big switch; cascading from the first digit to the second and if necaessary to the third and fourth. Once the cascade hits a valid AI, the approbiate parsing function is called with parameters approbiate for the AI.
+
+This *could* have been done by scanning some configuration object, with the AI as a key to the parsing functions and their parameters. On initialization this configuration object could have returned a curry-ed version of one of the parsing functions, which then would have been applied to the `codestring`.
+
+The construction of this configuration object would have been pretty complicated, and you would have had up to three loops over it: one for two-digit AIs, a second for three-digit AIs and perhaps a third round for four-digit AIs.
+
+So I decided to use the switch: it's long and deeply nested, but straightforward. Just jump from one decision to the next (max. three hops), find the parsing function ready for execution and you're done. 
  
 ## The errors thrown
 
-TBD
+If `identifyAI` encounters a problem it throws an error. The errors of `identifyAI` are simple numbered, catched by `parseBarcode` and transformed to an error message.
+
+The errors "01" to "31" represent an invalid AI in `codestring`, the message text indicates where the error occured. The error texts start with "invalid AI after".
+
+The errors "32" to "35" are thrown when a data element supposed to contain a valid date *doesn't* contain a valid date. The error texts have the form "invalid ... in date" with "..." as "year", "month" or "day".
 
 ## The ISO codes returned
 
-TBD
+The ISO codes come either 
+
+* from the data element itself or
+* are set by the parsing functions because they are implicit to the AI
+
+In the former case they are just handled through, without any checkings.
