@@ -85,6 +85,8 @@ The errors "01" to "31" represent an invalid AI in `codestring`, the message tex
 
 The errors "32" to "35" are thrown when a data element supposed to contain a valid date *doesn't* contain a valid date. The error texts have the form "invalid ... in date" with "..." as "year", "month" or "day".
 
+The error "36" is thrown when a data element supposed to contain a floating point number *doesn't* contain a floating point number.
+
 ## The ISO codes returned
 
 The ISO codes come either 
@@ -92,4 +94,27 @@ The ISO codes come either
 * from the data element itself or
 * are set by the parsing functions because they are implicit to the AI
 
-In the former case they are just handled through, without any checkings.
+In the former case they are just handled through, without any checkings. For your convenience the used ISO codes:
+
+|common name | ISO code |
+|:-- |:--------------|
+| kilograms | KGM |
+| meter | MTR |
+| square metres | MTK |
+| liters | LTR |
+| cubic metres | MTQ |
+| pounds | LBR |
+| inches | INH |
+| feet | FOT |
+| yard | YRD |
+| kilograms per sqare meter | 28 |
+| square inches | INK |
+| square feet | FTK |
+| square yard | YDK |
+| troy ounces | APZ |
+| U.S. ounces | ONZ |
+| U.S. quarts | QT |
+| U.S. gallons | GLL |
+| cubic inches | INQ |
+| cubic feet | FTQ |
+| cubic yard | YDQ |

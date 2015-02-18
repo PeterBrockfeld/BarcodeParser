@@ -68,7 +68,7 @@ var parseBarcode = (function () {
                 break;
             }
             this.unit = ""; // some elements are accompaigned by an unit of 
-                            // measurement or currency
+            // measurement or currency
         }
 
         /**
@@ -80,9 +80,9 @@ var parseBarcode = (function () {
          *     If identified:
          *       which function to call with
          *       which parameters to parse the element?[Description]]
-         * @param   {String} codestring a string; the function tries to 
+         * @param   {String} codestring a string; the function tries to
          *                   identify an AI in the beginning of this string
-         * @returns {Object} if it succeeds in identifying an AI the 
+         * @returns {Object} if it succeeds in identifying an AI the
          *                   ParsedElement is returned, together with the
          *                   still unparsed rest of codestring.
          */
@@ -101,8 +101,8 @@ var parseBarcode = (function () {
              * ============ auxiliary functions for identifyAI =============
              */
             /**
-             * some data items are followed by an FNC even in case of 
-             * fixed length, so the codestringToReturn may have 
+             * some data items are followed by an FNC even in case of
+             * fixed length, so the codestringToReturn may have
              * leading FNCs.
              *
              * This function eleminates these leading FNCs.
@@ -128,25 +128,32 @@ var parseBarcode = (function () {
              */
             function parseFloatingPoint(stringToParse, numberOfFractionals) {
                 var auxString = "",
-                    offset = stringToParse.length - numberOfFractionals;
+                    offset = stringToParse.length - numberOfFractionals,
+                    auxFloat = 0.0;
 
                 auxString = stringToParse.slice(0, offset)
                             + '.'
                             + stringToParse.slice(offset, stringToParse.length);
-                return parseFloat(auxString);
+                try {
+                    auxFloat = parseFloat(auxString);
+                } catch (e36) {
+                    throw "36";
+                }
+
+                return auxFloat;
             }
             /**
-             * ======== END of auxiliary function for identifyAI =======  
+             * ======== END of auxiliary function for identifyAI =======
              */
 
             /**
              *
              * ======== BEGIN of parsing functions in identifyAI =======
              *
-             * Some functions to parse the various GS1 formats. They 
+             * Some functions to parse the various GS1 formats. They
              * create a new ParsedElement and set its properties.
              *
-             * They all modify the variables "elementToReturn" and 
+             * They all modify the variables "elementToReturn" and
              * "codestringToReturn".
              */
 
@@ -285,7 +292,7 @@ var parseBarcode = (function () {
                 elementToReturn.data = parseFloatingPoint(numberPart, numberOfDecimals);
                 elementToReturn.unit = unit;
             }
-            
+
             /**
              * parses data elements of variable length, which additionally have
              *
@@ -355,10 +362,10 @@ var parseBarcode = (function () {
              *
              * ======= BEGIN of the big switch =======================
              *
-             * and now a very big "switch", which tries to find a valid 
+             * and now a very big "switch", which tries to find a valid
              * AI within the first digits of the codestring.
              *
-             * See the documentation for an explanation why it is made 
+             * See the documentation for an explanation why it is made
              * this way (and not by some configuration file).
              */
 
@@ -1152,27 +1159,27 @@ var parseBarcode = (function () {
              *
              * ======= END of the big switch =======================
              *
-             * now identifyAI has just to return the new 
-             * ParsedElement (create by one of the parsing 
+             * now identifyAI has just to return the new
+             * ParsedElement (create by one of the parsing
              * functions) and the (cleaned) rest of codestring.
              */
-            
+
             return ({
                 element: elementToReturn,
                 codestring: cleanCodestring(codestringToReturn)
             });
         }
-        
+
         /**
          *
          * =========== END of identifyAI =======================
          *
          */
-        
+
         /**
          * =========== BEGIN of main routine ===================
          */
-        
+
         /**
          *
          * ==== First step: ====
@@ -1226,12 +1233,12 @@ var parseBarcode = (function () {
 
         /**
          * ===== Second step: ====
-         * 
+         *
          * Parse "barcode" data element by data element using
          * identifyAI.
          *
          */
-        
+
         answer.parsedCodeItems = [];
 
         /**
@@ -1325,6 +1332,8 @@ var parseBarcode = (function () {
                     throw "invalid month in date";
                 case "35":
                     throw "invalid day in date";
+                case "36":
+                    throw "invalid number";
                 default:
                     throw "unknown error";
                 }
@@ -1332,7 +1341,7 @@ var parseBarcode = (function () {
         }
         /**
          * ==== Third and last step: =====
-         * 
+         *
          */
         return answer;
     }
