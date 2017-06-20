@@ -12,7 +12,6 @@
  *
  * encapsulating the barcode parsing function in an anonymous, self-executing function
  */
-var parseBarcode = (function () {
     'use strict';
     /**
      * This is the main routine provided by the parseBarcode library. It takes a string,
@@ -1263,79 +1262,79 @@ var parseBarcode = (function () {
             } catch (e) {
                 switch (e) {
                 case "01":
-                    throw "invalid AI after '0'";
+                    throw "在'0'后面的AI标识无效";
                 case "02":
-                    throw "invalid AI after '1'";
+                    throw "在'1'后面的AI标识无效";
                 case "03":
-                    throw "invalid AI after '24'";
+                    throw "在'24'后面的AI标识无效";
                 case "04":
-                    throw "invalid AI after '25'";
+                    throw "在'25'后面的AI标识无效";
                 case "05":
-                    throw "invalid AI after '2'";
+                    throw "在'2'后面的AI标识无效";
                 case "06":
-                    throw "invalid AI after '31'";
+                    throw "在'31'后面的AI标识无效";
                 case "07":
-                    throw "invalid AI after '32'";
+                    throw "在'32'后面的AI标识无效";
                 case "08":
-                    throw "invalid AI after '33'";
+                    throw "在'33'后面的AI标识无效";
                 case "09":
-                    throw "invalid AI after '34'";
+                    throw "在'34'后面的AI标识无效";
                 case "10":
-                    throw "invalid AI after '35'";
+                    throw "在'35'后面的AI标识无效";
                 case "11":
-                    throw "invalid AI after '36'";
+                    throw "在'36'后面的AI标识无效";
                 case "12":
-                    throw "invalid AI after '39'";
+                    throw "在'39'后面的AI标识无效";
                 case "13":
-                    throw "invalid AI after '3'";
+                    throw "在'3'后面的AI标识无效";
                 case "14":
-                    throw "invalid AI after '40'";
+                    throw "在'40'后面的AI标识无效";
                 case "15":
-                    throw "invalid AI after '41'";
+                    throw "在'41'后面的AI标识无效";
                 case "16":
-                    throw "invalid AI after '42'";
+                    throw "在'42'后面的AI标识无效";
                 case "17":
-                    throw "invalid AI after '4'";
+                    throw "在'4'后面的AI标识无效";
                 case "18":
-                    throw "invalid AI after '700'";
+                    throw "在'700'后面的AI标识无效";
                 case "19":
-                    throw "invalid AI after '70'";
+                    throw "在'70'后面的AI标识无效";
                 case "20":
-                    throw "invalid AI after '71'";
+                    throw "在'71'后面的AI标识无效";
                 case "21":
-                    throw "invalid AI after '7'";
+                    throw "在'7'后面的AI标识无效";
                 case "22":
-                    throw "invalid AI after '800'";
+                    throw "在'800'后面的AI标识无效";
                 case "23":
-                    throw "invalid AI after '801'";
+                    throw "在'801'后面的AI标识无效";
                 case "24":
-                    throw "invalid AI after '802'";
+                    throw "在'802'后面的AI标识无效";
                 case "25":
-                    throw "invalid AI after '80'";
+                    throw "在'80'后面的AI标识无效";
                 case "26":
-                    throw "invalid AI after '810'";
+                    throw "在'810'后面的AI标识无效";
                 case "27":
-                    throw "invalid AI after '811'";
+                    throw "在'811'后面的AI标识无效";
                 case "28":
-                    throw "invalid AI after '81'";
+                    throw "在'81'后面的AI标识无效";
                 case "29":
-                    throw "invalid AI after '82'";
+                    throw "在'82'后面的AI标识无效";
                 case "30":
-                    throw "invalid AI after '8'";
+                    throw "在'8'后面的AI标识无效";
                 case "31":
-                    throw "invalid AI after '9'";
+                    throw "在'9'后面的AI标识无效";
                 case "32":
-                    throw "no valid AI";
+                    throw "AI标识无效";
                 case "33":
-                    throw "invalid year in date";
+                    throw "日期中的年份有误";
                 case "34":
-                    throw "invalid month in date";
+                    throw "日期中的月份有误";
                 case "35":
-                    throw "invalid day in date";
+                    throw "日期中日有误";
                 case "36":
-                    throw "invalid number";
+                    throw "无效的数字";
                 default:
-                    throw "unknown error";
+                    throw "未知的错误";
                 }
             }
         }
@@ -1345,5 +1344,10 @@ var parseBarcode = (function () {
          */
         return answer;
     }
-    return parseBarcode;
-}());
+
+/**
+ * Created by flashcloud on 17/6/15.
+ */
+module.exports = {
+    decode: parseBarcode
+};
