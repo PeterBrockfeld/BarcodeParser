@@ -1262,79 +1262,79 @@
             } catch (e) {
                 switch (e) {
                 case "01":
-                    throw "在'0'后面的AI标识无效";
+                    throw Error.InvalidNumAI(1, "在'0'后面的AI标识无效");
                 case "02":
-                    throw "在'1'后面的AI标识无效";
+                    throw Error.InvalidNumAI(2, "在'1'后面的AI标识无效");
                 case "03":
-                    throw "在'24'后面的AI标识无效";
+                    throw Error.InvalidNumAI(3, "在'24'后面的AI标识无效");
                 case "04":
-                    throw "在'25'后面的AI标识无效";
+                    throw Error.InvalidNumAI(4, "在'25'后面的AI标识无效");
                 case "05":
-                    throw "在'2'后面的AI标识无效";
+                    throw Error.InvalidNumAI(5, "在'2'后面的AI标识无效");
                 case "06":
-                    throw "在'31'后面的AI标识无效";
+                    throw Error.InvalidNumAI(6, "在'31'后面的AI标识无效");
                 case "07":
-                    throw "在'32'后面的AI标识无效";
+                    throw Error.InvalidNumAI(7, "在'32'后面的AI标识无效");
                 case "08":
-                    throw "在'33'后面的AI标识无效";
+                    throw Error.InvalidNumAI(8, "在'33'后面的AI标识无效");
                 case "09":
-                    throw "在'34'后面的AI标识无效";
+                    throw Error.InvalidNumAI(9, "在'34'后面的AI标识无效");
                 case "10":
-                    throw "在'35'后面的AI标识无效";
+                    throw Error.InvalidNumAI(10, "在'35'后面的AI标识无效");
                 case "11":
-                    throw "在'36'后面的AI标识无效";
+                    throw Error.InvalidNumAI(11, "在'36'后面的AI标识无效");
                 case "12":
-                    throw "在'39'后面的AI标识无效";
+                    throw Error.InvalidNumAI(12, "在'39'后面的AI标识无效");
                 case "13":
-                    throw "在'3'后面的AI标识无效";
+                    throw Error.InvalidNumAI(13, "在'3'后面的AI标识无效");
                 case "14":
-                    throw "在'40'后面的AI标识无效";
+                    throw Error.InvalidNumAI(14, "在'40'后面的AI标识无效");
                 case "15":
-                    throw "在'41'后面的AI标识无效";
+                    throw Error.InvalidNumAI(15, "在'41'后面的AI标识无效");
                 case "16":
-                    throw "在'42'后面的AI标识无效";
+                    throw Error.InvalidNumAI(16, "在'42'后面的AI标识无效");
                 case "17":
-                    throw "在'4'后面的AI标识无效";
+                    throw Error.InvalidNumAI(17, "在'4'后面的AI标识无效");
                 case "18":
-                    throw "在'700'后面的AI标识无效";
+                    throw Error.InvalidNumAI(18, "在'700'后面的AI标识无效");
                 case "19":
-                    throw "在'70'后面的AI标识无效";
+                    throw Error.InvalidNumAI(19, "在'70'后面的AI标识无效");
                 case "20":
-                    throw "在'71'后面的AI标识无效";
+                    throw Error.InvalidNumAI(20, "在'71'后面的AI标识无效");
                 case "21":
-                    throw "在'7'后面的AI标识无效";
+                    throw Error.InvalidNumAI(21, "在'7'后面的AI标识无效");
                 case "22":
-                    throw "在'800'后面的AI标识无效";
+                    throw Error.InvalidNumAI(22, "在'800'后面的AI标识无效");
                 case "23":
-                    throw "在'801'后面的AI标识无效";
+                    throw Error.InvalidNumAI(23, "在'801'后面的AI标识无效");
                 case "24":
-                    throw "在'802'后面的AI标识无效";
+                    throw Error.InvalidNumAI(24, "在'802'后面的AI标识无效");
                 case "25":
-                    throw "在'80'后面的AI标识无效";
+                    throw Error.InvalidNumAI(25, "在'80'后面的AI标识无效");
                 case "26":
-                    throw "在'810'后面的AI标识无效";
+                    throw Error.InvalidNumAI(26, "在'810'后面的AI标识无效");
                 case "27":
-                    throw "在'811'后面的AI标识无效";
+                    throw Error.InvalidNumAI(27, "在'811'后面的AI标识无效");
                 case "28":
-                    throw "在'81'后面的AI标识无效";
+                    throw Error.InvalidNumAI(28, "在'81'后面的AI标识无效");
                 case "29":
-                    throw "在'82'后面的AI标识无效";
+                    throw Error.InvalidNumAI(29, "在'82'后面的AI标识无效");
                 case "30":
-                    throw "在'8'后面的AI标识无效";
+                    throw Error.InvalidNumAI(30, "在'8'后面的AI标识无效");
                 case "31":
-                    throw "在'9'后面的AI标识无效";
+                    throw Error.InvalidNumAI(31, "在'9'后面的AI标识无效");
                 case "32":
-                    throw "AI标识无效";
+                    throw Error.InvalidNormalAI;
                 case "33":
-                    throw "日期中的年份有误";
+                    throw Error.InvalidDate(33, "日期中的年份有误");
                 case "34":
-                    throw "日期中的月份有误";
+                    throw Error.InvalidDate(34, "日期中的月份有误");
                 case "35":
-                    throw "日期中日有误";
+                    throw Error.InvalidDate(35, "日期中日有误");
                 case "36":
-                    throw "无效的数字";
+                    throw Error.InvalidNum;
                 default:
-                    throw "未知的错误";
+                    throw Error.UnkownErr;
                 }
             }
         }
@@ -1344,6 +1344,20 @@
          */
         return answer;
     }
+
+Error.BarcodeNotANum = {num:1, code: '', des:''};
+Error.EmptyBarcode = {num:2, code: '', des:''};
+Error.BarcodeNotGS1 = {num:3, code: '', des:''};
+Error.InvalidBarcode = {num:4, code: '', des:''};
+Error.InvalidNumAI = function(code, des) {
+    return { num: 5, code: code, des: des };
+};
+Error.InvalidNormalAI = {num: 6, code: '32', des: "AI标识无效"};
+Error.InvalidDate = function(code, des) {
+    return { num: 7, code: code, des: des };
+};
+Error.InvalidNum = {num:8, code: '36', des:'无效的数字'};
+Error.UnkownErr = {num:9, code: '', des:'未知的错误'};
 
 /**
  * Created by flashcloud on 17/6/15.
