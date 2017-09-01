@@ -1,0 +1,19 @@
+{
+  "name": "gs1-parser",
+  "version": "1.0.4",
+  "description": "a hibc-barcode parser. fork it from https://github.com/PeterBrockfeld/BarcodeParser",
+  "main": "gs1Barcode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gs1",
+    "barcode"
+  ],
+  "author": "sungole",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flashcloud/BarcodeParser.git"
+  }  
+}
