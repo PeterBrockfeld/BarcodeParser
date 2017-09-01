@@ -1,6 +1,6 @@
 {
   "name": "gs1-parser",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "a hibc-barcode parser. fork it from https://github.com/PeterBrockfeld/BarcodeParser",
   "main": "gs1Barcode.js",
   "scripts": {

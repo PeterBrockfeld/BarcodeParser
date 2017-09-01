@@ -13,11 +13,12 @@ var AIMap = {
     ai13: 'packDate',    //包装日期
     ai15: 'safeDate',    //保质期, Best Before Date
     ai17: 'exp',
-    ai21: 'serial'  //序列号
+    ai21: 'serial',  //序列号
+    ai37: 'count'   //物流单位内含商品品项数
 }
 
 function buildGS1BarcodeObj(barcode) {
-    barcode = barcode.replace(/\(/g, "").replace(/\)/g, "");
+    barcode = barcode.replace(/\(/g, String.fromCharCode(29)).replace(/\)/g, "");
     var parseData = parser.decode(barcode);
     var parsedCodeItems = parseData.parsedCodeItems;
     var itemsCount = parsedCodeItems.length;
