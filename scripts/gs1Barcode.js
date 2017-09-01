@@ -17,6 +17,7 @@ var AIMap = {
 }
 
 function buildGS1BarcodeObj(barcode) {
+    barcode = barcode.replace(/\(/g, "").replace(/\)/g, "");
     var parseData = parser.decode(barcode);
     var parsedCodeItems = parseData.parsedCodeItems;
     var itemsCount = parsedCodeItems.length;
