@@ -1,6 +1,6 @@
 {
   "name": "barcode-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The barcode parser is a library for handling the contents of GS1 barcodes.",
   "main": "src/BarcodeParser.js",
   "scripts": {
