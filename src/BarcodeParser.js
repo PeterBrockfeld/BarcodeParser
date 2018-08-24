@@ -131,9 +131,9 @@ var parseBarcode = (function () {
                     offset = stringToParse.length - numberOfFractionals,
                     auxFloat = 0.0;
 
-                auxString = stringToParse.slice(0, offset)
-                            + '.'
-                            + stringToParse.slice(offset, stringToParse.length);
+                auxString = stringToParse.slice(0, offset) +
+                            '.' +
+                            stringToParse.slice(offset, stringToParse.length);
                 try {
                     auxFloat = parseFloat(auxString);
                 } catch (e36) {
@@ -433,7 +433,11 @@ var parseBarcode = (function () {
                     // Serial Number
                     parseVariableLength("21", "SERIAL");
                     break;
-                    // AI 22, 23 are not defined  
+                case "2":
+                    // Consumer product variant
+                    parseVariableLength("22", "CPV");
+                    break;
+                    // AI 23 is not defined  
                 case "4":
                     // from now, the third number matters:
                     thirdNumber = codestring.slice(2, 3);
