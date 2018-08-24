@@ -131,9 +131,9 @@ var parseBarcode = (function () {
                     offset = stringToParse.length - numberOfFractionals,
                     auxFloat = 0.0;
 
-                auxString = stringToParse.slice(0, offset)
-                            + '.'
-                            + stringToParse.slice(offset, stringToParse.length);
+                auxString = stringToParse.slice(0, offset) +
+                            '.' +
+                            stringToParse.slice(offset, stringToParse.length);
                 try {
                     auxFloat = parseFloat(auxString);
                 } catch (e36) {
