@@ -433,7 +433,11 @@ var parseBarcode = (function () {
                     // Serial Number
                     parseVariableLength("21", "SERIAL");
                     break;
-                    // AI 22, 23 are not defined  
+                case "2":
+                    // Consumer product variant
+                    parseVariableLength("22", "CPV");
+                    break;
+                    // AI 23 is not defined  
                 case "4":
                     // from now, the third number matters:
                     thirdNumber = codestring.slice(2, 3);

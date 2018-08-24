@@ -1,9 +1,10 @@
 describe("A parsed GS1 barcode", () => {
-    const fncChar = String.fromCharCode(29); // the ASCII "group separator"
-    const barcode = `]C101040123456789011715012910ABC123${fncChar}39329714711${fncChar}310300052539224711${fncChar}42127649716`;
     let result;
 
     beforeEach(() => {
+        const fncChar = String.fromCharCode(29); // the ASCII "group separator"
+        const barcode = `]C101040123456789011715012910ABC123${fncChar}39329714711${fncChar}310300052539224711${fncChar}42127649716`;
+
         result = parseBarcode(barcode);
     });
 
@@ -67,6 +68,19 @@ describe("A parsed GS1 barcode", () => {
             dataTitle: "SHIP TO POST",
             data: "49716",
             unit: "276"
+        })]));
+    });
+});
+
+describe("A parsed GS1 barcode including the consumer product variant", () => {
+    it("has the CPV element", () => {
+        const barcode = "]C1229000481118CDB1950224";
+        const result = parseBarcode(barcode);
+
+        expect(result.parsedCodeItems).toEqual(jasmine.arrayContaining([jasmine.objectContaining({
+            ai: "22",
+            dataTitle: "CPV",
+            data: "9000481118CDB1950224"
         })]));
     });
 });
