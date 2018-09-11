@@ -84,3 +84,16 @@ describe("A parsed GS1 barcode including the consumer product variant", () => {
         })]));
     });
 });
+
+describe("A parsed GS1 barcode", () => {
+    it("should behave...", () => {
+        const barcode = "]C10100307130640862171905001010059243000024";
+        const result = parseBarcode(barcode);
+
+        expect(result.parsedCodeItems).toEqual(jasmine.arrayContaining([jasmine.objectContaining({
+            ai: "17",
+            dataTitle: "USE BY OR EXPIRY",
+            data: new Date(2019, 4, 31, 0, 0, 0, 0)
+        })]));
+    });
+});
