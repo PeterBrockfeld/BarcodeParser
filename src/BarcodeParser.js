@@ -3,7 +3,9 @@
  *
  * JavaScript for parsing GS1 barcodes, see
  *
- * https://github.com/PeterBrockfeld/BarcodeParser
+ * https://github.com/hprange/BarcodeParser (active fork)
+ *
+ * https://github.com/PeterBrockfeld/BarcodeParser (original repo)
  *
  * for details.
  */
