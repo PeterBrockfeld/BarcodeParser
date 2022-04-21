@@ -19,6 +19,7 @@ var AIMap = {
 
 function buildGS1BarcodeObj(barcode) {
     barcode = barcode.replace(/\(/g, String.fromCharCode(29)).replace(/\)/g, "");
+    barcode = barcode.replace(/[^A-Za-z0-9]+/g, "");    //只提取里面的字母和数字，禁止图像编码中的特殊字符扫入
     var parseData = parser.decode(barcode);
     var parsedCodeItems = parseData.parsedCodeItems;
     var itemsCount = parsedCodeItems.length;
